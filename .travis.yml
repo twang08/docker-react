@@ -1,0 +1,13 @@
+# .travis.yml
+# tell travis we need sudo to execute this build
+sudo: required
+# travis will auto install services list here
+services:
+	- docker
+
+before_install:
+	- docker build -t twang/docker-react -f Dockerfile.dev .
+# going to exec for the test, if got any exit code other than 0, will break CI
+script:
+  - docker run -e CI=true USERNAME/docker-react npm run test
+language: generic
